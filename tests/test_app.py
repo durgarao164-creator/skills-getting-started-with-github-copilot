@@ -7,9 +7,11 @@ client = TestClient(app)
 
 
 def test_unregister_participant_removes_email_from_activity():
+    # Arrange
     activity_name = "Basketball Club"
     email = "newstudent@mergington.edu"
 
+    # Act
     signup_response = client.post(
         f"/activities/{activity_name}/signup?email={email}"
     )
@@ -18,6 +20,8 @@ def test_unregister_participant_removes_email_from_activity():
     delete_response = client.delete(
         f"/activities/{activity_name}/participants/{email}"
     )
+
+    # Assert
     assert delete_response.status_code == 200
 
     activities = client.get("/activities").json()
